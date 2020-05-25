@@ -2,7 +2,7 @@ FROM quay.io/openshift/origin-jenkins-agent-base:4.3
 
 EXPOSE 8080
 
-ENV PYTHON_VERSION=3.6 \
+ENV PYTHON_VERSION=3.7 \
     PATH=$HOME/.local/bin/:$PATH \
     PYTHONUNBUFFERED=1 \
     PYTHONIOENCODING=UTF-8 \
@@ -13,7 +13,7 @@ ENV PYTHON_VERSION=3.6 \
 ADD ubi.repo /etc/yum.repos.d/ubi.repo
 
 RUN INSTALL_PKGS=" \
-      rh-python36 rh-python36-python-devel rh-python36-python-setuptools rh-python36-python-wheel rh-python36-python-pip nss_wrapper \
+      rh-python37 rh-python37-python-devel rh-python37-python-setuptools rh-python37-python-wheel rh-python37-python-pip nss_wrapper \
       httpd24 httpd24-httpd-devel httpd24-mod_ssl httpd24-mod_auth_kerb httpd24-mod_ldap \
       httpd24-mod_session atlas-devel gcc-gfortran libffi-devel libtool-ltdl enchant" && \
     DISABLE_REPOS=--disablerepo='rhel-*' && \
@@ -21,8 +21,8 @@ RUN INSTALL_PKGS=" \
     yum -y --setopt=tsflags=nodocs $DISABLE_REPOS install $INSTALL_PKGS && \
     rpm -V $INSTALL_PKGS && \
     yum -y clean all --enablerepo='*' && \
-    source scl_source enable rh-python36 && \
-    scl enable rh-python36 bash && \
+    source scl_source enable rh-python37 && \
+    scl enable rh-python37 bash && \
     python3 -m pip install --upgrade pip && \
     python3 -m pip install twine
 
